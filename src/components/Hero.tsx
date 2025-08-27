@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Play, ArrowRight, MessageCircle, Users, Shield, Star, Brain, Zap, Target, Award, Globe, Sparkles, CheckCircle, Camera, Video } from 'lucide-react';
+import { Heart, Play, ArrowRight, MessageCircle, Users, Shield, Star, Brain, Zap, Sparkles, CheckCircle } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
+  const videoRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollIntoView = () => {
+    videoRef.current?.scrollIntoView({ behavior: "smooth" });
+  }
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -14,21 +19,21 @@ const Hero: React.FC = () => {
   return (
     <div className="relative overflow-hidden bg-white">
       {/* Section 1: Main Hero */}
-      <section className="relative min-h-screen flex items-center justify-center pt-16 bg-pink-50">
-        <div className="container mx-auto px-4 relative z-10">
+      <section className="relative min-h-screen flex items-center justify-center bg-pink-50">
+        <div className="container mx-auto mb-8 md:mb-0 px-4 md:px-6 lg:px-8 relative z-10 max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="space-y-4 text-center lg:text-left lg:flex lg:flex-col lg:justify-left lg:items-center gap-4 lg:gap-6">
+            <div className="space-y-4 text-center lg:text-left">
               <div className="space-y-4">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-pink-600">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-pink-600">
                   Find Your Perfect
                   <span className="block text-purple-600">Soul Mate</span>
                 </h1>
                 
-                <p className="text-lg md:text-xl lg:text-2xl text-gray-700 font-medium">
+                <p className="text-md md:text-xl lg:text-2xl text-gray-700 font-medium">
                   AI-Powered Dating with Digital Body Language Analysis
                 </p>
                 
-                <p className="text-base md:text-lg text-gray-600 max-w-xl">
+                <p className="text-sm md:text-lg text-gray-600 max-w-xl">
                   Revolutionary AI technology that analyzes your digital behavior patterns, typing speed, response times, and micro-interactions to find your perfect match.
                 </p>
               </div>
@@ -49,18 +54,18 @@ const Hero: React.FC = () => {
                 
                 <button className="border-2 border-pink-500 text-pink-600 hover:bg-pink-50 px-8 py-3 rounded-full transition-all duration-300 flex items-center justify-center space-x-2 font-semibold">
                   <Play className="w-5 h-5" />
-                  <span>Watch Demo</span>
+                  <span onClick={scrollIntoView}>Watch Demo</span>
                 </button>
               </div>
             </div>
 
             <div className="flex justify-center relative">
               <div className="relative">
-                <div className="bg-white rounded-2xl p-4 shadow-xl">
+                <div className="bg-white max-h-fit rounded-lg p-4 shadow-xl">
                   <img 
                     src="/1.gif" 
                     alt="Happy Couple Connection" 
-                    className="w-full h-64 object-cover rounded-xl"
+                    className="w-full h-44 md:h-64 object-fit rounded-xl"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
@@ -78,25 +83,24 @@ const Hero: React.FC = () => {
       </section>
 
       {/* Section 2: Demo Video - Full Width */}
-      <section className="w-full bg-white py-8">
-        <div className="container mx-auto px-4 text-center mb-6">
+      <section ref={videoRef} className="flex flex-col justify-center gap-y-6 md:gap-y-12 w-full bg-white pt-12 md:pt-16 pb-12 md:pb-24">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center mb-6 max-w-7xl">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-purple-600 mb-4">
             See SoulSync in Action
           </h2>
           <p className="text-lg md:text-xl lg:text-2xl text-gray-600 font-medium max-w-3xl mx-auto">
-            Watch how our AI analyzes digital body language to find perfect matches
+            <div>Watch how our AI analyzes digital body language to</div>
+            <span>find perfect matches</span>
           </p>
         </div>
         
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center px-4 md:px-6 lg:px-8">
           <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-2xl w-full mx-4">
             <video 
-              className="w-full aspect-square object-cover"
+              className="w-full object-fit rounded-xl border-4 border-pink-400 hover:border-purple-500 transition-colors duration-500 shadow-lg"
               controls
-              poster="/3.gif"
             >
-              <source src="/demo-video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
+              <source src="/soul-sync.mp4" type="video/mp4"/>
             </video>
           </div>
         </div>
@@ -104,7 +108,7 @@ const Hero: React.FC = () => {
 
       {/* Section 3: Key Features */}
       <section className="bg-pink-50 py-12">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-pink-600 mb-4">
               Revolutionary AI Features
@@ -120,18 +124,18 @@ const Hero: React.FC = () => {
               { icon: Zap, title: 'Real-time Insights', desc: 'Instant feedback on conversation compatibility and engagement levels', color: 'purple-500' },
               { icon: Heart, title: 'Perfect Matches', desc: 'Find your soulmate through intelligent matching algorithms', color: 'pink-600' }
             ].map((feature, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className={`inline-flex items-center justify-center w-12 h-12 bg-pink-100 rounded-xl mb-3`}>
+                <h1 className="inline-flex items-center justify-center w-12 h-12 bg-pink-100 rounded-xl mb-3">
                   <feature.icon className={`w-6 h-6 text-${feature.color}`} />
-                </div>
-                
+                </h1>
+
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
                   {feature.title}
                 </h3>
-                
+
                 <p className="text-gray-600 font-medium">
                   {feature.desc}
                 </p>
@@ -143,7 +147,7 @@ const Hero: React.FC = () => {
 
       {/* Section 4: Statistics */}
       <section className="bg-white py-12">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center max-w-7xl">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-purple-600 mb-12">
             Trusted by Millions
           </h2>
@@ -172,16 +176,16 @@ const Hero: React.FC = () => {
       </section>
 
       {/* Section 5: How It Works */}
-      <section className="bg-pink-50 py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
+      <section className="bg-pink-50 py-12 h-auto lg:min-h-[85vh]">
+        <div className="container mx-auto px-8 md:px-12 lg:px-20 max-w-8xl">
+          <div className="text-center mb-20">
             <h2 className="text-3xl font-bold text-purple-600 mb-2">
               How SoulSync Works
             </h2>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-2 items-center mt-0 lg:mt-14">
+            <div className="space-y-10">
               {[
                 { step: '01', title: 'Create Profile', desc: 'Set up your profile with AI-guided questions and personality analysis' },
                 { step: '02', title: 'AI Analysis', desc: 'Our AI analyzes your digital behavior patterns and communication style' },
@@ -196,18 +200,16 @@ const Hero: React.FC = () => {
                     {item.step}
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-1">{item.title}</h3>
-                    <p className="text-gray-600 font-medium">{item.desc}</p>
+                    <h3 className="text-xl font-bold text-gray-900 mb-1">{item.title}</h3>
+                    <p className="text-gray-600 font-medium text-md">{item.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="flex justify-center">
-              <div className="bg-white rounded-2xl p-4 shadow-xl">
-
                 <video src="/couple-gif.mp4" 
-                className="w-full h-64 object-cover rounded-xl" 
+                className="w-5/6 h-full object-cover rounded-xl" 
                 autoPlay loop muted playsInline
                 onError={(e) => {
                     const target = e.target as HTMLImageElement;
@@ -215,11 +217,10 @@ const Hero: React.FC = () => {
                     target.nextElementSibling?.classList.remove('hidden');
                   }}>
                 </video>
-
+              
                 <div className="hidden w-full h-64 flex items-center justify-center bg-purple-50 rounded-xl">
                   <Sparkles className="w-16 h-16 text-purple-400" />
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -227,7 +228,7 @@ const Hero: React.FC = () => {
 
       {/* Section 6: Testimonials */}
       <section className="bg-white py-12">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-pink-600 mb-2">
               Love Stories
@@ -260,7 +261,7 @@ const Hero: React.FC = () => {
 
       {/* Section 7: Security & Privacy */}
       <section className="bg-pink-50 py-12">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center max-w-7xl">
           <div className="max-w-2xl mx-auto">
             <Shield className="w-16 h-16 text-pink-500 mx-auto mb-4" />
             <h2 className="text-3xl font-bold text-purple-600 mb-2">
@@ -287,7 +288,7 @@ const Hero: React.FC = () => {
 
       {/* Section 8: Pricing */}
       <section className="bg-white py-12">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-pink-600 mb-2">
               Choose Your Plan
@@ -335,7 +336,7 @@ const Hero: React.FC = () => {
 
       {/* Section 9: Community */}
       <section className="bg-pink-50 py-12">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center max-w-7xl">
           <h2 className="text-3xl font-bold text-purple-600 mb-2">
             Join Our Community
           </h2>
@@ -361,18 +362,17 @@ const Hero: React.FC = () => {
               </div>
             </div>
             
-            <div className="bg-white rounded-2xl p-4 shadow-xl">
-              <div className="w-full h-48 bg-pink-50 rounded-xl flex items-center justify-center">
-                <Users className="w-16 h-16 text-purple-400" />
+              <div className="w-full min-h-fit bg-pink-50 rounded-xl flex items-center justify-center">
+                <img src="/team-community.jpg" alt="Meet Our Community" 
+                className='w-full h-[80%] border-2 border-pink-400 hover:border-purple-500 transition-colors duration-300 rounded-lg ' />
               </div>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Section 10: CTA */}
       <section className="bg-pink-500 py-12">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center max-w-7xl">
           <h2 className="text-3xl font-bold text-white mb-2">
             Ready to Find Your Soulmate?
           </h2>

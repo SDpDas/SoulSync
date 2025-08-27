@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Brain, Activity, MessageSquare, Plus, History, Sparkles, Zap, User, Bot, Trash2, Settings, X, Menu } from 'lucide-react';
+import { Send, Brain, Activity, Plus, History, Sparkles, Zap, User, Bot, Trash2, X, Menu } from 'lucide-react';
 import Footer from './Footer';
 
 interface Message {
@@ -54,7 +54,6 @@ const Chat: React.FC = () => {
   const typingStartTime = useRef<number>(0);
   const lastKeystroke = useRef<number>(0);
   const sessionStartTime = useRef<number>(Date.now());
-  const firstRender = useRef(true);
 
   // Load data from localStorage on component mount
   useEffect(() => {
@@ -138,7 +137,7 @@ const Chat: React.FC = () => {
     
     // Excitement indicators
     const exclamationCount = (text.match(/!/g) || []).length;
-    const excitedEmojis = ['😍', '🥰', '😘', '💕', '❤️', '✨', '🔥', '💖'];
+    const excitedEmojis = ['😍', '🥰', '😘', '💕', '❤', '✨', '🔥', '💖'];
     const hasExcitedEmoji = excitedEmojis.some(emoji => text.includes(emoji));
     
     // Determine sentiment
@@ -213,7 +212,7 @@ const Chat: React.FC = () => {
     const input = userInput.toLowerCase();
     
     if (input.includes('profile') || input.includes('bio')) {
-      return "I'd be happy to help you optimize your dating profile! A great profile should showcase your personality authentically. Based on your communication style, I can see you have a unique voice. Would you like me to review your current bio or help you write a compelling new one that attracts the right matches?";
+      return `I'd be happy to help you optimize your dating profile! A great profile should showcase your personality authentically. Based on your communication style, I can see you have a unique voice. Would you like me to review your current bio or help you write a compelling new one that attracts the right matches?`;
     }
     
     if (input.includes('match') || input.includes('compatibility')) {
@@ -383,75 +382,75 @@ const Chat: React.FC = () => {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center space-x-2">
                 <Brain className="w-4 h-4 text-pink-600" />
-                <h2 className="text-base font-bold text-gray-800">AI Assistant</h2>
+                <h2 className="text-lg font-bold text-gray-800">AI Assistant</h2>
               </div>
               <button 
                 onClick={() => setShowSidebar(false)}
-                className="md:hidden p-1 rounded-lg hover:bg-pink-100"
+                className="md:hidden p-2 rounded-lg hover:bg-pink-100"
               >
-                <X className="w-4 h-4 text-gray-600" />
+                <X className="w-5 h-5 text-gray-600" />
               </button>
             </div>
             <button 
               onClick={startNewChat}
-              className="w-full bg-pink-500 hover:bg-pink-600 text-white py-2 px-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 text-xs"
+              className="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2"
             >
-              <Plus className="w-3 h-3" />
+              <Plus className="w-4 h-4" />
               <span>New Chat</span>
             </button>
           </div>
 
           {/* User Stats */}
-          <div className="p-3 border-b border-pink-200">
-            <h3 className="text-xs font-bold text-gray-800 mb-2">Your Stats</h3>
-            <div className="space-y-2">
+          <div className="p-4 border-b border-pink-200 flex-shrink-0">
+            <h3 className="text-sm font-bold text-gray-800 mb-3">Your Stats</h3>
+            <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-600 font-medium">Messages</span>
-                <span className="text-xs text-pink-600 font-bold">{userStats.totalMessages}</span>
+                <span className="text-sm text-gray-600 font-medium">Messages</span>
+                <span className="text-sm text-pink-600 font-bold">{userStats.totalMessages}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-600 font-medium">Avg Typing</span>
-                <span className="text-xs text-purple-600 font-bold">{userStats.averageTypingSpeed} WPM</span>
+                <span className="text-sm text-gray-600 font-medium">Avg Typing</span>
+                <span className="text-sm text-purple-600 font-bold">{userStats.averageTypingSpeed} WPM</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-600 font-medium">Sentiment</span>
-                <span className="text-xs text-blue-600 font-bold capitalize">{userStats.dominantSentiment}</span>
+                <span className="text-sm text-gray-600 font-medium">Sentiment</span>
+                <span className="text-sm text-blue-600 font-bold capitalize">{userStats.dominantSentiment}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-600 font-medium">Session</span>
-                <span className="text-xs text-green-600 font-bold">{userStats.sessionDuration}m</span>
+                <span className="text-sm text-gray-600 font-medium">Session</span>
+                <span className="text-sm text-green-600 font-bold">{userStats.sessionDuration}m</span>
               </div>
             </div>
           </div>
 
           {/* Chat History */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="p-3">
+          <div className="flex-1 overflow-y-auto min-h-0">
+            <div className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-1">
-                  <History className="w-3 h-3 text-gray-600" />
-                  <h3 className="text-xs font-bold text-gray-800">History</h3>
+                  <History className="w-4 h-4 text-gray-600" />
+                  <h3 className="text-sm font-bold text-gray-800">History</h3>
                 </div>
                 <button
                   onClick={clearAllSessions}
-                  className="text-gray-400 hover:text-red-500 transition-colors duration-300 p-1"
+                  className="text-gray-400 hover:text-red-500 transition-colors duration-300 p-2"
                   title="Clear all sessions"
                 >
-                  <Trash2 className="w-3 h-3" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-2">
                 {chatSessions.map((session) => (
                   <div key={session.id} className="group relative">
                     <button
                       onClick={() => loadSession(session.id)}
-                      className={`w-full text-left p-2 rounded-lg transition-all duration-300 ${
+                      className={`w-full text-left p-3 rounded-lg transition-all duration-300 ${
                         activeSessionId === session.id
                           ? 'bg-pink-200 border border-pink-400'
                           : 'bg-white hover:bg-pink-100 border border-pink-200'
                       }`}
                     >
-                      <div className="font-medium text-gray-800 mb-1 truncate text-xs">
+                      <div className="font-medium text-gray-800 mb-1 truncate text-sm">
                         {session.messages.length > 1 ? session.messages[1].text.slice(0, 30) + '...' : session.title}
                       </div>
                       <div className="text-xs text-gray-600">
@@ -460,9 +459,9 @@ const Chat: React.FC = () => {
                     </button>
                     <button
                       onClick={() => deleteSession(session.id)}
-                      className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all duration-300 p-1"
+                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all duration-300 p-1"
                     >
-                      <Trash2 className="w-3 h-3" />
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 ))}
@@ -480,72 +479,82 @@ const Chat: React.FC = () => {
         )}
 
         {/* Main Chat Area */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0 max-w-4xl mx-auto">
           {/* Chat Header */}
-          <div className="bg-white border-b border-gray-200 p-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <button 
+          <div className="bg-white border-b border-gray-200 p-4 flex-shrink-0">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              {/* Left Section */}
+              <div className="flex items-center space-x-2 min-w-0">
+                <button
                   onClick={() => setShowSidebar(true)}
-                  className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+                  className="md:hidden p-2 rounded-lg hover:bg-gray-100 mr-2"
                 >
-                  <Menu className="w-4 h-4 text-gray-600" />
+                  <Menu className="w-5 h-5 text-gray-600" />
                 </button>
-                <div className="w-6 h-6 bg-pink-100 rounded-full flex items-center justify-center">
-                  <Bot className="w-3 h-3 text-pink-600" />
+                <div className="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-5 h-5 text-pink-600" />
                 </div>
-                <div>
-                  <h3 className="text-sm font-bold text-gray-800">AI Dating Assistant</h3>
-                  <p className="text-gray-600 font-medium text-xs">Online • Ready to help</p>
+                <div className="truncate">
+                  <h3 className="text-base md:text-lg font-bold text-gray-800 truncate">
+                    AI Dating Assistant
+                  </h3>
+                  <p className="text-gray-600 font-medium text-xs md:text-sm">
+                    Online • Ready to help
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="text-right">
-                  <div className="text-xs text-gray-600 font-medium hidden sm:block">Current Session</div>
-                  <div className="text-xs font-bold text-pink-600">{messages.length} messages</div>
+
+              {/* Right Section */}
+              <div className="flex items-center space-x-2 text-right">
+                <div>
+                  <div className="text-xs md:text-sm text-gray-600 font-medium hidden sm:block">
+                    Current Session
+                  </div>
+                  <div className="text-sm md:text-base font-bold text-pink-600">
+                    {messages.length} messages
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-3 space-y-3">
+          <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 min-h-0" style={{ maxHeight: 'calc(100vh - 180px)' }}>
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`max-w-xs sm:max-w-md ${message.sender === 'user' ? 'order-2' : 'order-1'}`}>
-                  <div
-                    className={`px-3 py-2 rounded-xl ${
-                      message.sender === 'user'
-                        ? 'bg-pink-500 text-white'
-                        : 'bg-gray-100 text-gray-800'
-                    }`}
-                  >
-                    <p className="font-medium leading-relaxed text-xs sm:text-sm">{message.text}</p>
-                    <div className="flex items-center justify-between mt-1 text-xs opacity-70">
-                      <span>{message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                      {message.sender === 'user' && message.typingSpeed && (
-                        <span className="hidden sm:inline">{message.typingSpeed} WPM • {message.sentiment}</span>
-                      )}
+                <div
+                  key={message.id}
+                  className={`flex flex-col relative gap-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div className={`max-w-sm md:max-w-md lg:max-w-lg ${message.sender === 'user' ? 'order-2' : 'order-1'}`}>
+                    <div
+                      className={`px-4 py-3 rounded-2xl shadow-sm ${
+                        message.sender === 'user'
+                          ? 'bg-pink-500 text-white'
+                          : 'bg-gray-100 text-gray-800'
+                      }`}
+                    >
+                      <p className="font-medium leading-relaxed text-sm md:text-base">{message.text}</p>
                     </div>
                   </div>
                   
                   {/* AI Analysis */}
                   {message.aiAnalysis && (
-                    <div className="mt-2 bg-purple-50 rounded-lg p-2 border border-purple-200">
+                    <div className="mt-3 bg-purple-50 rounded-lg p-3 border border-purple-200 max-w-fit">
                       <div className="flex items-center space-x-1 mb-2">
-                        <Sparkles className="w-3 h-3 text-purple-600" />
-                        <span className="text-xs font-bold text-purple-800">AI Analysis</span>
+                        <Sparkles className="w-4 h-4 text-purple-600" />
+                        <span className="text-sm font-bold text-purple-800">AI Analysis</span>
                       </div>
-                      <div className="text-xs text-gray-700 space-y-1">
+                      <div className="text-sm text-gray-700 space-y-2">
                         <p><strong>Engagement:</strong> {message.aiAnalysis.engagement}</p>
-                        <div className="hidden sm:block">
+                        <div className="hidden md:block">
                           <strong>Suggestions:</strong>
-                          <ul className="list-disc list-inside mt-1 space-y-0.5">
+                          <ul className="list-disc list-inside mt-2 space-y-1">
                             {message.aiAnalysis.suggestions.map((suggestion, index) => (
-                              <li key={index} className="text-xs">{suggestion}</li>
+                              <li key={index} className="text-sm">{suggestion}</li>
                             ))}
                           </ul>
                         </div>
@@ -554,13 +563,13 @@ const Chat: React.FC = () => {
                   )}
                 </div>
                 
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                   message.sender === 'user' ? 'order-1 mr-3 bg-pink-100' : 'order-2 ml-3 bg-gray-200'
                 }`}>
                   {message.sender === 'user' ? (
-                    <User className="w-3 h-3 text-pink-600" />
+                    <User className="w-4 h-4 text-pink-600" />
                   ) : (
-                    <Bot className="w-3 h-3 text-gray-600" />
+                    <Bot className="w-4 h-4 text-gray-600" />
                   )}
                 </div>
               </div>
@@ -569,14 +578,14 @@ const Chat: React.FC = () => {
             {isAiTyping && (
               <div className="flex justify-start">
                 <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
-                    <Bot className="w-3 h-3 text-gray-600" />
+                  <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                    <Bot className="w-4 h-4 text-gray-600" />
                   </div>
-                  <div className="bg-gray-100 px-3 py-2 rounded-xl">
+                  <div className="bg-gray-100 px-4 py-3 rounded-2xl">
                     <div className="flex space-x-1">
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -587,53 +596,53 @@ const Chat: React.FC = () => {
           </div>
 
           {/* Live Analysis Panel */}
-          <div className="bg-pink-50 border-t border-pink-200 p-2">
+          <div className="bg-pink-50 border-t border-pink-200 p-3 flex-shrink-0">
             <div className="flex items-center justify-center">
               <div className="flex items-center space-x-3 flex-wrap justify-center">
                 <div className="flex items-center space-x-1">
-                  <Activity className="w-3 h-3 text-pink-600" />
-                  <span className="text-xs font-medium text-gray-700">Typing:</span>
-                  <span className="text-xs font-bold text-pink-600">{currentTypingSpeed} WPM</span>
+                  <Activity className="w-4 h-4 text-pink-600" />
+                  <span className="text-sm font-medium text-gray-700">Typing:</span>
+                  <span className="text-sm font-bold text-pink-600">{currentTypingSpeed} WPM</span>
                 </div>
                 
                 <div className="flex items-center space-x-1">
-                  <Brain className="w-3 h-3 text-purple-600" />
-                  <span className="text-xs font-medium text-gray-700">Sentiment:</span>
-                  <span className="text-xs font-bold text-purple-600 capitalize">{currentSentiment}</span>
+                  <Brain className="w-4 h-4 text-purple-600" />
+                  <span className="text-sm font-medium text-gray-700">Sentiment:</span>
+                  <span className="text-sm font-bold text-purple-600 capitalize">{currentSentiment}</span>
                 </div>
                 
-                <div className="flex items-center space-x-1 hidden sm:flex">
-                  <Zap className="w-3 h-3 text-blue-600" />
-                  <span className="text-xs font-medium text-gray-700">Status:</span>
-                  <span className="text-xs font-bold text-green-600">Ready</span>
+                <div className="flex items-center space-x-1 hidden md:flex">
+                  <Zap className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm font-medium text-gray-700">Status:</span>
+                  <span className="text-sm font-bold text-green-600">Ready</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Input Area */}
-          <div className="bg-white border-t border-gray-200 p-3">
-            <div className="flex space-x-2">
+          <div className="bg-white border-t-2 border-gray-300 p-3 md:p-4 flex-shrink-0 mb-0 shadow-lg">
+            <div className="flex flex-col sm:flex-row gap-3 max-w-4xl mx-auto w-full">
               <textarea
                 value={inputText}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask me anything about dating, relationships, or improving your profile..."
-                className="flex-1 resize-none rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent font-medium text-xs sm:text-sm"
-                rows={1}
+                placeholder="Ask me anything..."
+                className="flex-1 resize-none rounded-xl border-2 border-gray-300 px-3 md:px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent font-medium text-sm md:text-base shadow-sm w-full"
+                rows={2}
               />
               <button
                 onClick={sendMessage}
                 disabled={!inputText.trim() || isAiTyping}
-                className="bg-pink-500 hover:bg-pink-600 disabled:bg-gray-300 text-white p-2 rounded-lg transition-all duration-300 flex items-center justify-center"
+                className="bg-pink-500 hover:bg-pink-600 disabled:bg-gray-300 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl transition-all duration-300 flex items-center justify-center font-semibold shadow-md hover:shadow-lg w-full sm:w-auto"
               >
-                <Send className="w-3 h-3" />
+                <Send className="w-5 h-5" />
               </button>
             </div>
           </div>
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );
