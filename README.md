@@ -359,6 +359,28 @@ CORS_ORIGINS=http://localhost:5173
 
 ## 📱 **Screenshots & Demo**
 
+https://github.com/user-attachments/assets/9cb5e182-daa9-437b-b013-ef07ec504b83
+
+### Hero Section
+<img width="1918" height="1078" alt="Hero" src="https://github.com/user-attachments/assets/e2863eea-51a5-4d1c-b9b2-d9864a81e09e" />
+
+### Features Section
+<img width="1918" height="1025" alt="Features" src="https://github.com/user-attachments/assets/d93c5cd0-f924-437e-826f-86babfcba357" />
+
+### Dashboard Page
+<img width="1918" height="1027" alt="Dashboard" src="https://github.com/user-attachments/assets/6a49f762-2caf-4647-9480-5ef76b042ace" />
+
+### AI Dating Assistant Page
+<img width="1918" height="1022" alt="AI-assistant" src="https://github.com/user-attachments/assets/e12f2c62-ba23-4cbb-bab9-75bbb4481810" />
+
+### Matches Page
+<img width="1918" height="1022" alt="Matches" src="https://github.com/user-attachments/assets/bb69ba50-8071-4a6a-9592-36ce6f477863" />
+
+### Settings Page
+<img width="1916" height="1022" alt="Settings" src="https://github.com/user-attachments/assets/771f14d0-df88-4e1a-bf65-91f59ef32cbb" />
+
+---
+
 ### **Mobile-First Design**
 <div align="center">
 
