@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, Brain, Activity, Plus, History, Sparkles, Zap, User, Bot, Trash2, X, Menu } from 'lucide-react';
-import Footer from './Footer';
 
 interface Message {
   id: number;
@@ -642,8 +641,6 @@ const Chat: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
