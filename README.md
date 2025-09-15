@@ -16,6 +16,21 @@
 
 ---
 
+## ⚡ Quick Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/soulsync/ai-dating-platform.git
+cd ai-dating-platform
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+---
+
 ## 🚀 **The Problem We Solve**
 
 Traditional dating apps rely on superficial matching based on photos and basic information. **95% of meaningful connections** are lost because apps can't detect genuine interest, compatibility, or emotional engagement.
