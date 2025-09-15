@@ -185,25 +185,31 @@ const Profile: React.FC = () => {
                     {[...Array(3)].map((_, index) => (
                       <div key={index} className="relative group">
                         <div className="aspect-square bg-pink-50 rounded-lg overflow-hidden border-2 border-dashed border-pink-200">
-                          {profile.photos[index] ? (
+                          { selectedImage && index === 0 ? (
+                            // Show the newly uploaded image in the first slot
+                            <img 
+                              src={selectedImage}
+                              alt="Selected Preview"
+                              className="w-full h-full object-cover"
+                            />) : profile.photos[index] ? (
                             <img 
                               src={profile.photos[index]}
                               alt={`Profile ${index + 1}`}
                               className="w-full h-full object-cover"
                             />
-                          ) : (
-                            <Camera className="w-8 h-8 text-pink-400" />
+                            ) : (
+                              <Camera className="w-8 h-8 text-pink-400" />
+                            )}
+                          </div>
+                          {isEditing && (
+                            <button 
+                              onClick={handleImageUpload}
+                              className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            >
+                              <Camera className="w-8 h-8 text-white" />
+                            </button>
                           )}
                         </div>
-                        {isEditing && (
-                          <button 
-                            onClick={handleImageUpload}
-                            className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          >
-                            <Camera className="w-8 h-8 text-white" />
-                          </button>
-                        )}
-                      </div>
                     ))}
                   </div>
                   
@@ -508,7 +514,7 @@ const Profile: React.FC = () => {
                   <span className="font-semibold text-gray-700">Subscription</span>
                 </button>
                 <button className="w-full text-left p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors duration-300">
-                  <span className="font-semibold text-gray-700 text-red-600">Delete Account</span>
+                  <span className="font-semibold text-red-600">Delete Account</span>
                 </button>
               </div>
             </div>

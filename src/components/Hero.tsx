@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Play, ArrowRight, MessageCircle, Users, Shield, Star, Brain, Zap, Sparkles, CheckCircle } from 'lucide-react';
+import { Heart, Play, ArrowRight, MessageCircle, Users, Shield, Star, Brain, Zap, CheckCircle, Eye, MessageSquare, Clock } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [scrollY]);
 
   return (
     <div className="relative overflow-hidden bg-white">
@@ -120,9 +120,12 @@ const Hero: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: Brain, title: 'AI Analysis', desc: 'Deep learning algorithms analyze digital behavior patterns in real-time', color: 'pink-500' },
+              { icon: Brain, title: 'Digital Body Language Analysis', desc: 'Deep learning algorithms analyze digital behavior patterns in real-time', color: 'pink-500' },
               { icon: Zap, title: 'Real-time Insights', desc: 'Instant feedback on conversation compatibility and engagement levels', color: 'purple-500' },
-              { icon: Heart, title: 'Perfect Matches', desc: 'Find your soulmate through intelligent matching algorithms', color: 'pink-600' }
+              { icon: Heart, title: 'Perfect Matches', desc: 'Find your soulmate through intelligent matching algorithms', color: 'pink-600' },
+              { icon: Eye, title: 'Micro-Interaction Tracking', desc: 'Monitor scrolls, pauses, and engagement patterns to identify authentic connections and mutual attraction.', color: 'purple-600'},
+              { icon: MessageSquare, title: 'Conversation Quality Score', desc: 'AI-powered scoring system that evaluates conversation depth, engagement, and compatibility indicators.', color: 'pink-700'},
+              { icon: Clock, title: 'Response Time Analysis', desc: 'Understand communication styles and interest levels through sophisticated timing pattern recognition.', color: 'purple-700'}
             ].map((feature, index) => (
               <div
                 key={index}
@@ -217,10 +220,6 @@ const Hero: React.FC = () => {
                     target.nextElementSibling?.classList.remove('hidden');
                   }}>
                 </video>
-              
-                <div className="hidden w-full h-64 flex items-center justify-center bg-purple-50 rounded-xl">
-                  <Sparkles className="w-16 h-16 text-purple-400" />
-                </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -7,13 +7,16 @@ import Dashboard from './components/Dashboard';
 import Chat from './components/Chat';
 import Matches from './components/Matches';
 import Profile from './components/Profile';
+import Blog from './components/Blog';
+import Events from './components/Events';
+import Community from './components/Community';
+import Support from './components/Support';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import FloatingElements from './components/FloatingElements';
 import './styles/animations.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -35,7 +38,7 @@ function App() {
       <FloatingElements />
       
       {location.pathname !== '/onboarding' && (
-        <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <Navbar />
       )}
       
       <Routes>
@@ -50,6 +53,10 @@ function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path='/events' element={<Events />} />
+        <Route path='/community' element={<Community />} />
+        <Route path='/support' element={<Support />} />
       </Routes>
     </div>
   );

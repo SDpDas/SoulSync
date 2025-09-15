@@ -95,7 +95,7 @@ const Features: React.FC = () => {
                         target.nextElementSibling?.classList.remove('hidden');
                       }}
                     />
-                    <div className="hidden w-64 h-48 flex items-center justify-center bg-blue-50 rounded-2xl">
+                    <div className="hidden w-64 h-48 md:flex items-center justify-center bg-blue-50 rounded-2xl">
                       <Brain className="w-16 h-16 text-blue-400" />
                     </div>
                   </div>

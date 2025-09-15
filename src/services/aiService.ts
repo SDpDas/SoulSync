@@ -1,3 +1,5 @@
+import { UserProfile } from "./geminiService";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
 export interface TypingAnalysis {
@@ -79,7 +81,7 @@ class AIService {
       console.log('🔗 Backend connection:', this.isBackendAvailable ? 'Connected' : 'Disconnected');
     } catch (error) {
       this.isBackendAvailable = false;
-      console.log('⚠️ Backend not available, using localStorage data');
+      console.log('⚠️ Backend not available, using localStorage data. Also the error is', error);
     }
   }
 
@@ -298,7 +300,7 @@ class AIService {
     }
   }
 
-  public async updateUserProfile(profileData: any): Promise<boolean> {
+  public async updateUserProfile(profileData: Partial<UserProfile>): Promise<boolean> {
     if (this.isBackendAvailable) {
       try {
         const response = await fetch(`${API_BASE_URL}/user-profile`, {
@@ -326,7 +328,7 @@ class AIService {
     return true;
   }
 
-  public getUserProfile(): any {
+  public getUserProfile() {
     const stored = localStorage.getItem('userProfile');
     return stored ? JSON.parse(stored) : null;
   }

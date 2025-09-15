@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
-import { Heart, User, MessageCircle, Sparkles, Users, Shield, Menu, X, Home } from 'lucide-react';
+import { Heart, User, MessageCircle, Users, Shield, Menu, X, Home, BookOpen, Calendar, MessageSquare, HelpCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
-interface NavbarProps {
-  currentPage: string;
-  setCurrentPage: (page: string) => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
+const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -22,9 +17,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
   const navItems = [
     { to: '/', label: 'Home', icon: Home },
     { to: '/dashboard', label: 'Dashboard', icon: User },
-    { to: '/chat', label: 'AI', icon: MessageCircle },
+    { to: '/chat', label: 'Chat', icon: MessageCircle },
     { to: '/matches', label: 'Matches', icon: Users },
-    { to: '/profile', label: 'Profile', icon: Shield }
+    { to: '/profile', label: 'Profile', icon: Shield },
+    { to: '/blog', label: 'Blog', icon: BookOpen },
+    { to: '/events', label: 'Events', icon: Calendar },
+    { to: '/community', label: 'Community', icon: MessageSquare },
+    { to: '/support', label: 'Support', icon: HelpCircle }
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -42,35 +41,63 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
             </Link>
 
             {/* Desktop Navigation - Hidden on mobile */}
-            <div className="hidden md:flex items-center space-x-6">
-              {navItems.map((item) => (
-                <Link 
-                  key={item.to}
-                  to={item.to} 
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors duration-200 ${
-                    isActive(item.to) 
-                      ? 'bg-pink-100 text-pink-600' 
-                      : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50'
-                  }`}
-                  onClick={() => setCurrentPage(item.label.toLowerCase())}
-                >
-                  <item.icon className="w-4 h-4" />
-                  <span className="font-medium">{item.label}</span>
-                </Link>
-              ))}
+            <div className="hidden lg:flex items-center space-x-4">
+              {navItems.map((item) => {
+                  return(
+                    <Link 
+                      key={item.to}
+                      to={item.to} 
+                      className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors duration-200 ${
+                        isActive(item.to)
+                          ? 'bg-pink-200 text-pink-600' 
+                          : 'text-gray-600 hover:text-pink-600 hover:bg-pink-100'
+                      }`}
+                      
+                    >
+                      <item.icon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{item.label}</span>
+                    </Link>
+                  )
+                })}
 
               <Link 
                 to="/matches"
-                className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium"
+                className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium text-sm"
               >
                 Get Started
               </Link>
             </div>
 
-            {/* Mobile Hamburger Button */}
+            {/* Medium screen navigation - Hidden on mobile and large screens */}
+            <div className="hidden md:flex lg:hidden items-center space-x-2">
+              {navItems.slice(0, 5).map((item) => (
+                <Link 
+                  key={item.to}
+                  to={item.to} 
+                  className={`flex items-center space-x-1 px-2 py-2 rounded-lg transition-colors duration-200 ${
+                    isActive(item.to) 
+                      ? 'bg-pink-200 text-pink-600' 
+                      : 'text-gray-600 hover:text-pink-600 hover:bg-pink-100'
+                  }`}
+                  
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span className="text-xs font-medium">{item.label}</span>
+                </Link>
+              ))}
+              
+              <Link 
+                to="/matches"
+                className="bg-pink-500 hover:bg-pink-600 text-white px-3 py-2 rounded-lg transition-colors duration-200 font-medium text-xs"
+              >
+                Get Started
+              </Link>
+            </div>
+
+            {/* Mobile/Medium Hamburger Button */}
             <button 
               onClick={toggleMenu}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6 text-gray-600" />
@@ -81,9 +108,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
           </div>
         </div>
 
-        {/* Mobile Menu Overlay */}
+        {/* Mobile/Medium Menu Overlay */}
         {isMenuOpen && (
-          <div className="md:hidden fixed inset-0 top-16 bg-black bg-opacity-50 z-40" onClick={closeMenu}>
+          <div className="lg:hidden fixed inset-0 top-16 bg-black bg-opacity-50 z-40" onClick={closeMenu}>
             <div className="bg-white w-64 h-full shadow-lg" onClick={(e) => e.stopPropagation()}>
               <div className="p-4 space-y-2">
                 {navItems.map((item) => (
@@ -96,7 +123,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                         : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50'
                     }`}
                     onClick={() => {
-                      setCurrentPage(item.label.toLowerCase());
+                      
                       closeMenu();
                     }}
                   >

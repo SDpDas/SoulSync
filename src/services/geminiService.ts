@@ -23,6 +23,11 @@ interface UserProfile {
   compatibility?: number;
 }
 
+interface MatchScore {
+  id: number,
+  score: number
+}
+
 class GeminiService {
   private static instance: GeminiService;
   private genAI: GoogleGenerativeAI | null = null;
@@ -81,7 +86,7 @@ class GeminiService {
       throw new Error('Gemini AI not initialized');
     }
 
-    const model = this.genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const prompt = `
     As an AI dating expert, analyze the following user profile and preferences to rank potential matches:
@@ -122,12 +127,12 @@ class GeminiService {
       // Extract JSON from response
       const jsonMatch = text.match(/\[.*\]/s);
       if (jsonMatch) {
-        const scores = JSON.parse(jsonMatch[0]);
+        const scores: MatchScore[] = JSON.parse(jsonMatch[0]);
         
         // Apply scores to profiles
         const rankedProfiles = existingProfiles
           .map(profile => {
-            const scoreData = scores.find((s: any) => s.id === profile.id);
+            const scoreData = scores.find((s: MatchScore) => s.id === profile.id);
             return {
               ...profile,
               compatibility: scoreData ? scoreData.score / 100 : Math.random() * 0.3 + 0.6
@@ -151,7 +156,7 @@ class GeminiService {
   ): Promise<number> {
     if (this.isAvailable && this.genAI) {
       try {
-        const model = this.genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const prompt = `
         Analyze compatibility between these two dating profiles:
@@ -198,7 +203,7 @@ class GeminiService {
   ): Promise<string[]> {
     if (this.isAvailable && this.genAI && matches.length > 0) {
       try {
-        const model = this.genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const topMatches = matches.slice(0, 3);
         const prompt = `
@@ -336,6 +341,10 @@ class GeminiService {
       } else {
         insights.push(`You attract people from diverse professional backgrounds, showing your broad appeal`);
       }
+    }
+
+    if (userProfile.interests && userProfile.interests.length > 0) {
+      insights.push(`Since you enjoy ${userProfile.interests[0]}, highlighting it more could increase compatibility matches`);
     }
 
     // Fill with default insights if needed

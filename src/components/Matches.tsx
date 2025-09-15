@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, MessageCircle, Star, MapPin, Briefcase, GraduationCap, X, Check, Filter, Search, Sliders, Brain, Zap, Send, ArrowLeft, Phone, Video, MoreHorizontal, Smile } from 'lucide-react';
+import { Heart, MessageCircle, MapPin, Briefcase, GraduationCap, Filter, Search,  Brain,  Send, ArrowLeft, Phone, Video, MoreHorizontal, Smile } from 'lucide-react';
 import geminiService, { UserProfile, MatchingPreferences } from '../services/geminiService';
 import Footer from './Footer';
 
 interface Match extends UserProfile {
-  lastActive: string;
+  lastActive?: string;
   distance: number;
-  profileImage: string;
+  profileImage?: string;
 }
 
 interface ChatMessage {
@@ -46,7 +46,6 @@ const Matches: React.FC = () => {
   const professions = ['Software Engineer', 'Doctor', 'Teacher', 'Business Owner', 'CA', 'Lawyer', 'Designer', 'Marketing', 'Banker', 'Consultant'];
   const educationLevels = ['12th Pass', 'Graduate', 'Post Graduate', 'PhD', 'Diploma'];
 
-  // Indian profile images
   const profileImages = [
     'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
     'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -66,13 +65,13 @@ const Matches: React.FC = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [matches, searchTerm, filters]);
+  }, []);
 
   const loadMatches = async () => {
     setLoading(true);
     try {
       // Indian names
-      const names = ['Priya Sharma', 'Ananya Gupta', 'Kavya Patel', 'Riya Singh', 'Sneha Agarwal', 'Pooja Mehta', 'Nisha Jain', 'Divya Reddy', 'Shreya Iyer', 'Aditi Verma'];
+      const names = ['Priya Sharma', 'Ananya Gupta', 'Matt Cardona', 'Riya Singh', 'David Luis', 'Aftab Ahmed', 'Nisha Jain', 'Divya Reddy', 'Manoj Patel', 'Janet Carol'];
       
       const cities = ['Mumbai, Maharashtra', 'Delhi, Delhi', 'Bangalore, Karnataka', 'Hyderabad, Telangana', 'Chennai, Tamil Nadu', 'Kolkata, West Bengal', 'Pune, Maharashtra', 'Ahmedabad, Gujarat', 'Jaipur, Rajasthan', 'Lucknow, Uttar Pradesh'];
       
@@ -134,13 +133,22 @@ const Matches: React.FC = () => {
         profession: 'Engineer'
       };
 
-      const intelligentMatches = await geminiService.generateMatches(userProfile, preferences, mockProfiles);
+      const intelligentMatches = (await geminiService.generateMatches(userProfile, preferences, mockProfiles)) as Match[];
+      
+      const matchesWithDefaults: Match[] = intelligentMatches.map((profile, i) => ({
+        ...profile,
+        distance: profile["distance"] ?? Math.round((Math.random() * 15 + 1) * 10) / 10,
+        lastActive: profile["lastActive"] ?? `${Math.floor(Math.random() * 24) + 1} hours ago`,
+        profileImage: profile.photos[0] ?? profileImages[i % profileImages.length],
+      }));
       
       // Get AI insights
       const insights = await geminiService.getMatchingInsights(userProfile, intelligentMatches);
       setAiInsights(insights);
       
-      setMatches(intelligentMatches);
+      // setMatches(matchesWithDefaults);
+
+      setMatches(mockProfiles);
     } catch (error) {
       console.error('Failed to load matches:', error);
     } finally {
@@ -149,7 +157,7 @@ const Matches: React.FC = () => {
   };
 
   const applyFilters = () => {
-    let filtered = matches.filter(match => {
+    const filtered = matches.filter(match => {
       // Age filter
       if (match.age < filters.ageRange[0] || match.age > filters.ageRange[1]) return false;
       
@@ -549,16 +557,14 @@ const Matches: React.FC = () => {
                 <img 
                   src={match.profileImage} 
                   alt={match.name}
-                  className="w-full h-full object-cover"
+                  className="w-full max-h-full object-contain"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
                     target.nextElementSibling?.classList.remove('hidden');
                   }}
                 />
-                <div className="hidden w-full h-full flex items-center justify-center bg-pink-50">
-                  <Heart className="w-12 h-12 text-pink-400" />
-                </div>
+
                 
                 {/* Compatibility Badge */}
                 <div className="absolute top-2 right-2 bg-pink-500 text-white px-2 py-1 rounded-full text-xs font-bold">

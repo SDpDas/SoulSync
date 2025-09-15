@@ -22,6 +22,15 @@ interface ChatSession {
   messages: Message[];
 }
 
+interface AnalysisData {
+  wpm: number;
+  confidence_level: string;
+  emotional_state: string;
+  sentiment: string;
+  engagement_level: string;
+  compatibility_score: number;
+}
+
 interface UserStats {
   totalMessages: number;
   averageTypingSpeed: number;
@@ -61,10 +70,10 @@ const Chat: React.FC = () => {
     const savedActiveSession = localStorage.getItem('activeSessionId');
 
     if (savedSessions) {
-      const sessions = JSON.parse(savedSessions).map((session: any) => ({
+      const sessions = (JSON.parse(savedSessions) as ChatSession[]).map((session) => ({
         ...session,
         timestamp: new Date(session.timestamp),
-        messages: session.messages.map((msg: any) => ({
+        messages: session.messages.map((msg) => ({
           ...msg,
           timestamp: new Date(msg.timestamp)
         }))
@@ -77,11 +86,11 @@ const Chat: React.FC = () => {
     }
 
     if (savedActiveSession && savedSessions) {
-      const sessions = JSON.parse(savedSessions);
-      const activeSession = sessions.find((s: any) => s.id === savedActiveSession);
+      const sessions = JSON.parse(savedSessions) as ChatSession[];
+      const activeSession = sessions.find((s) => s.id === savedActiveSession);
       if (activeSession) {
         setActiveSessionId(savedActiveSession);
-        setMessages(activeSession.messages.map((msg: any) => ({
+        setMessages(activeSession.messages.map((msg) => ({
           ...msg,
           timestamp: new Date(msg.timestamp)
         })));
@@ -207,7 +216,7 @@ const Chat: React.FC = () => {
     });
   };
 
-  const generateAIResponse = (userInput: string, analysis: any): string => {
+  const generateAIResponse = (userInput: string, analysis: AnalysisData): string => {
     const input = userInput.toLowerCase();
     
     if (input.includes('profile') || input.includes('bio')) {
@@ -260,7 +269,7 @@ const Chat: React.FC = () => {
     setIsAiTyping(true);
 
     // Simulate AI analysis
-    const analysis = {
+    const analysis: AnalysisData = {
       wpm: finalTypingSpeed,
       confidence_level: finalTypingSpeed > 40 ? 'high' : finalTypingSpeed > 20 ? 'medium' : 'low',
       emotional_state: finalSentiment,
@@ -610,7 +619,7 @@ const Chat: React.FC = () => {
                   <span className="text-sm font-bold text-purple-600 capitalize">{currentSentiment}</span>
                 </div>
                 
-                <div className="flex items-center space-x-1 hidden md:flex">
+                <div className="items-center space-x-1 hidden md:flex">
                   <Zap className="w-4 h-4 text-blue-600" />
                   <span className="text-sm font-medium text-gray-700">Status:</span>
                   <span className="text-sm font-bold text-green-600">Ready</span>
